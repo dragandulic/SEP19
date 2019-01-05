@@ -17,8 +17,9 @@ public class ProbalController {
 	@GetMapping("/ispis")
 	public String ispisi() {
 		System.out.println("Dosao u probaControlerrrrrrrrrrrrrrrr");
-		String retval = probaService.dodajProba();
-		return retval;
+		//String retval = probaService.dodajProba();
+		//return retval;
+		return "vratio";
 	}
 	
 }
