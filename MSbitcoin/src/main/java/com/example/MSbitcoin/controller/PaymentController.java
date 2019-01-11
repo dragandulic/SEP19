@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.MSbitcoin.dto.BitcoinDTO;
 import com.example.MSbitcoin.dto.BitcoinResponseDTO;
+import com.example.MSbitcoin.dto.PaymentMFDTO;
+import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 
 @RestController
 @RequestMapping("/payment")
@@ -25,17 +29,21 @@ public class PaymentController {
 	private RestTemplate restTemplate; 
 	
 	
-	@PostMapping(value="/bitcoin")
-	public ResponseEntity<?> payment(@RequestBody BitcoinDTO bitcoindto){
-		System.out.println("CONTROLLLER");
+	@GetMapping(value="/bitcoin/{id}")
+	public String payment(@PathVariable Long id){
+		System.out.println("CONTROLLLER " );
+		String idstring = Long.toString(id);
+		PaymentMFDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentMFDTO.class);      
+
+		
 		
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("order_id", UUID.randomUUID().toString());
-		mapa.put("price_amount", bitcoindto.getAmount());
+		mapa.put("price_amount", responsee.getAmount());
 		mapa.put("price_currency", "USD");
 		mapa.put("receive_currency", "USD");
-		mapa.put("title", bitcoindto.getTitle());
-		mapa.put("description", "des");
+		mapa.put("title", responsee.getTitle());
+		mapa.put("description", responsee.getNameCustomer());
 		//mapa.put("callback_url", "...  ");
 		//mapa.put("success_url", "...  ");
 		
@@ -47,7 +55,11 @@ public class PaymentController {
 		
 		BitcoinResponseDTO response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, BitcoinResponseDTO.class);
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAA " + response.getPayment_url());
-		return null;
+		PaymentBitcoinResponse retvalue = new PaymentBitcoinResponse();
+		retvalue.setPaymentURL(response.getPayment_url());
+		return retvalue.getPaymentURL();
+		
+		
 	}
 	
 }
