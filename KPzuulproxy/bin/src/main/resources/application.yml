@@ -1,0 +1,24 @@
+zuul:
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 60000
+  routes:
+   msbitcoin:
+    path: /msbitcoin/**
+    url: http://localhost:8060
+  
+
+hystrix:
+  command:
+    default:
+      execution:
+       isolation:
+         thread:
+          timeoutInMilliseconds: 50000
+         
+         
+         
+         
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
