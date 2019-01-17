@@ -24,7 +24,7 @@ public class BankController {
 	private RestTemplate restTemplate;
 	
 	@GetMapping("/getPaymentObj/{id}")
-	public void getPaymentO(@PathVariable Long id) {
+	public String getPaymentO(@PathVariable Long id) {
 		
 		System.out.println(id);
 		PaymentObjDTO returnPaymentObj = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentObjDTO.class);
@@ -47,9 +47,9 @@ public class BankController {
 		
 		HttpEntity entity = new HttpEntity(request, header);
 		
-		restTemplate.postForObject("localhost:8097/request/checkrequest", entity, Request.class);
+		String res = restTemplate.postForObject("http://localhost:8097/request/checkrequest", entity, String.class);
 		
-		
+		return res;
 	}
 	
 }
