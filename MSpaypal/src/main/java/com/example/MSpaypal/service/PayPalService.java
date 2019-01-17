@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.example.MSpaypal.controller.PaymentMFDTO;
+import com.example.MSpaypal.controller.PaypalConfirmDTO;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payer;
@@ -28,11 +30,13 @@ public class PayPalService {
 	
 	
 	
-	public Map<String, Object> createPayment(String sum){
+	public Map<String, Object> createPayment(PaymentMFDTO dto){
 	    Map<String, Object> response = new HashMap<String, Object>();
 	    Amount amount = new Amount();
 	    amount.setCurrency("USD");
-	    amount.setTotal(sum);
+	    String price=String.valueOf(dto.getAmount());
+	    System.out.println(price   + " Ovo je cenaaa");
+	    amount.setTotal(price);
 	    Transaction transaction = new Transaction();
 	    transaction.setAmount(amount);
 	    List<Transaction> transactions = new ArrayList<Transaction>();
@@ -47,8 +51,9 @@ public class PayPalService {
 	    payment.setTransactions(transactions);
 
 	    RedirectUrls redirectUrls = new RedirectUrls();
-	    redirectUrls.setCancelUrl("http://localhost:3000/cancel");
-	    redirectUrls.setReturnUrl("http://localhost:3000/");
+	    redirectUrls.setCancelUrl("http://localhost:3006");
+	    redirectUrls.setReturnUrl("http://localhost:3006/#/success");
+	    
 	    payment.setRedirectUrls(redirectUrls);
 	    Payment createdPayment;
 	    try {
@@ -65,23 +70,29 @@ public class PayPalService {
 	            }
 	            response.put("status", "success");
 	            response.put("redirect_url", redirectUrl);
+	            System.out.println(redirectUrl);
 	        }
 	    } catch (PayPalRESTException e) {
 	        System.out.println("Error happened during payment creation!");
 	    }
+	    
+	    
 	    return response;
 	}
 	
 	
 	
-	public Map<String, Object> completePayment(HttpServletRequest req){
+	public Map<String, Object> completePayment(PaypalConfirmDTO req){
+		
+		System.out.println(req.getPaymentId()+" Ovo je id od transakcije");
+		System.out.println(req.getPayerID()+ " Ovoje id kupcaaaaa");
 	    Map<String, Object> response = new HashMap();
 	    Payment payment = new Payment();
-	    payment.setId(req.getParameter("paymentId"));
+	    payment.setId(req.getPaymentId());
 	    
 
 	    PaymentExecution paymentExecution = new PaymentExecution();
-	    paymentExecution.setPayerId(req.getParameter("PayerID"));
+	    paymentExecution.setPayerId(req.getPayerID());
 	    try {
 	        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 	        Payment createdPayment = payment.execute(context, paymentExecution);
@@ -92,6 +103,8 @@ public class PayPalService {
 	    } catch (PayPalRESTException e) {
 	        System.err.println(e.getDetails());
 	    }
+	    
+	    
 	    return response;
 	}
 	
