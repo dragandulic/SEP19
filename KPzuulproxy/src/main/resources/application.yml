@@ -6,6 +6,9 @@ zuul:
    msbitcoin:
     path: /msbitcoin/**
     url: http://localhost:8060
+   paypal:
+    path: /mspaypal/**
+    url: http://localhost:8061
   
 
 hystrix:
