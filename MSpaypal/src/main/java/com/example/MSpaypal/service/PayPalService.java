@@ -86,7 +86,7 @@ public class PayPalService {
 		
 		System.out.println(req.getPaymentId()+" Ovo je id od transakcije");
 		System.out.println(req.getPayerID()+ " Ovoje id kupcaaaaa");
-	    Map<String, Object> response = new HashMap();
+	    Map<String, Object> response = new HashMap<String, Object>();
 	    Payment payment = new Payment();
 	    payment.setId(req.getPaymentId());
 	    
@@ -96,9 +96,10 @@ public class PayPalService {
 	    try {
 	        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 	        Payment createdPayment = payment.execute(context, paymentExecution);
+	        System.out.println(createdPayment);
 	        if(createdPayment!=null){
 	            response.put("status", "success");
-	            response.put("payment", createdPayment);
+	           // response.put("payment", createdPayment);
 	        }
 	    } catch (PayPalRESTException e) {
 	        System.err.println(e.getDetails());
