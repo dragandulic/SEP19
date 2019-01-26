@@ -16,8 +16,6 @@ public class Request {
 	
 	private double amount;
 	
-	private double amountMag;
-	
 	private String merchant_order_id;
 	
 	public Request() {
@@ -56,13 +54,6 @@ public class Request {
 		this.amount = amount;
 	}
 
-	public double getAmountMag() {
-		return amountMag;
-	}
-
-	public void setAmountMag(double amountMag) {
-		this.amountMag = amountMag;
-	}
 
 	public String getMerchant_order_id() {
 		return merchant_order_id;

@@ -34,13 +34,11 @@ public class BankController {
 		
 		String merchantId = returnPaymentObj.getMerchant_id();
 		String merchantPassword = returnPaymentObj.getMerchant_password();
-		double amountMag = returnPaymentObj.getAmountMag();
 		double amount = returnPaymentObj.getAmount();
 		
 		Request request = new Request();
 		request.setMerchant_id(merchantId);
 		request.setMerchant_password(merchantPassword);
-		request.setAmountMag(amountMag);
 		request.setAmount(amount);
 		
 		org.springframework.http.HttpHeaders header = new org.springframework.http.HttpHeaders();

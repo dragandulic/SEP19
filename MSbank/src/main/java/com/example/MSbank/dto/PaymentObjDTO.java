@@ -14,7 +14,6 @@ public class PaymentObjDTO {
 	private String issnumberSeller;
 	private String merchant_id;
 	private String merchant_password;
-	private double amountMag;
 	
 	
 	private double amount;
@@ -103,14 +102,6 @@ public class PaymentObjDTO {
 
 	public void setMerchant_password(String merchant_password) {
 		this.merchant_password = merchant_password;
-	}
-
-	public double getAmountMag() {
-		return amountMag;
-	}
-
-	public void setAmountMag(double amountMag) {
-		this.amountMag = amountMag;
 	}
 
 	public double getAmount() {
