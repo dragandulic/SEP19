@@ -1,6 +1,6 @@
 package com.example.MSbitcoin.dto;
 
-public class PaymentMFDTO {
+public class PaymentObjDTO {
 
 	private Long idPaymentObj;
 	
@@ -17,7 +17,7 @@ public class PaymentMFDTO {
 	
 	private String title;
 	
-	public PaymentMFDTO() {
+	public PaymentObjDTO() {
 		
 	}
 

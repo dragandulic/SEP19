@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.MSbitcoin.dto.BitcoinDTO;
 import com.example.MSbitcoin.dto.BitcoinResponseDTO;
-import com.example.MSbitcoin.dto.PaymentMFDTO;
+import com.example.MSbitcoin.dto.PaymentObjDTO;
 import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 
 @RestController
@@ -31,9 +31,9 @@ public class PaymentController {
 	
 	@GetMapping(value="/bitcoin/{id}")
 	public String payment(@PathVariable Long id){
-		System.out.println("CONTROLLLER " );
+		
 		String idstring = Long.toString(id);
-		PaymentMFDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentMFDTO.class);      
+		PaymentObjDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentObjDTO.class);      
 
 		
 		
@@ -44,17 +44,16 @@ public class PaymentController {
 		mapa.put("receive_currency", "USD");
 		mapa.put("title", responsee.getTitle());
 		mapa.put("description", responsee.getNameCustomer());
-		//mapa.put("callback_url", "...  ");
+		mapa.put("callback_url", "https://api-sandbox.coingate.com/account/orders");
 		//mapa.put("success_url", "...  ");
 		
 		
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Token 8W2cFE2hUx55MHxxuisH9gigTzdP7pRjYmQsHH2V");
-
+		header.add("Authorization", "Token gAm4KxdZd4btLWZ2s_zsf9G8LEPmiE4RbNxqeDmV");
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(mapa, header);
 		
 		BitcoinResponseDTO response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, BitcoinResponseDTO.class);
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAA " + response.getPayment_url());
+		
 		PaymentBitcoinResponse retvalue = new PaymentBitcoinResponse();
 		retvalue.setPaymentURL(response.getPayment_url());
 		return retvalue.getPaymentURL();
