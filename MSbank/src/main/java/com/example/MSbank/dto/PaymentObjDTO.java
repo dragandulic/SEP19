@@ -5,112 +5,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+
 public class PaymentObjDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private Long idPaymentObj;
-	
-	private Long idCustomer;
-	private String nameCustomer;
-	private String surnameCustomer;
-	private String emailCustomer;
-	
-	private Long idSeller;
-	private String nameSeller;
-	private String issnumberSeller;
-	private String merchant_id;
-	private String merchant_password;
 	
 	private double amount;
 	
 	private String title;
 	
+	private String description;
+	
+	private String merchantid;
+	
+	private String merchantpassword;
+	
 	public PaymentObjDTO() {
 		
 	}
 
-	public Long getIdPaymentObj() {
-		return idPaymentObj;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdPaymentObj(Long idPaymentObj) {
-		this.idPaymentObj = idPaymentObj;
-	}
-
-	public Long getIdCustomer() {
-		return idCustomer;
-	}
-
-	public void setIdCustomer(Long idCustomer) {
-		this.idCustomer = idCustomer;
-	}
-
-	public String getNameCustomer() {
-		return nameCustomer;
-	}
-
-	public void setNameCustomer(String nameCustomer) {
-		this.nameCustomer = nameCustomer;
-	}
-
-	public String getSurnameCustomer() {
-		return surnameCustomer;
-	}
-
-	public void setSurnameCustomer(String surnameCustomer) {
-		this.surnameCustomer = surnameCustomer;
-	}
-
-	public String getEmailCustomer() {
-		return emailCustomer;
-	}
-
-	public void setEmailCustomer(String emailCustomer) {
-		this.emailCustomer = emailCustomer;
-	}
-
-	public Long getIdSeller() {
-		return idSeller;
-	}
-
-	public void setIdSeller(Long idSeller) {
-		this.idSeller = idSeller;
-	}
-
-	public String getNameSeller() {
-		return nameSeller;
-	}
-
-	public void setNameSeller(String nameSeller) {
-		this.nameSeller = nameSeller;
-	}
-
-	public String getIssnumberSeller() {
-		return issnumberSeller;
-	}
-
-	public void setIssnumberSeller(String issnumberSeller) {
-		this.issnumberSeller = issnumberSeller;
-	}
-
-	public String getMerchant_id() {
-		return merchant_id;
-	}
-
-	public void setMerchant_id(String merchant_id) {
-		this.merchant_id = merchant_id;
-	}
-
-	public String getMerchant_password() {
-		return merchant_password;
-	}
-
-	public void setMerchant_password(String merchant_password) {
-		this.merchant_password = merchant_password;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public double getAmount() {
@@ -129,12 +48,28 @@ public class PaymentObjDTO {
 		this.title = title;
 	}
 
-	public Long getId() {
-		return id;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getMerchantid() {
+		return merchantid;
+	}
+
+	public void setMerchantid(String merchantid) {
+		this.merchantid = merchantid;
+	}
+
+	public String getMerchantpassword() {
+		return merchantpassword;
+	}
+
+	public void setMerchantpassword(String merchantpassword) {
+		this.merchantpassword = merchantpassword;
 	}
 
 }
