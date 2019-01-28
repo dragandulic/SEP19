@@ -18,6 +18,10 @@ public class ObjectPayment {
 	
 	private String description;
 	
+	private String merchantid;
+
+	private String merchantpassword;
+	
 	public ObjectPayment() {
 		
 	}
@@ -52,5 +56,21 @@ public class ObjectPayment {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getMerchantid() {
+		return merchantid;
+	}
+
+	public void setMerchantid(String merchantid) {
+		this.merchantid = merchantid;
+	}
+
+	public String getMerchantpassword() {
+		return merchantpassword;
+	}
+
+	public void setMerchantpassword(String merchantpassword) {
+		this.merchantpassword = merchantpassword;
 	}
 }

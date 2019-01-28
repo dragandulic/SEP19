@@ -47,4 +47,21 @@ public class ObjectPaymentService {
 		}
 		return null;
 	}
+	
+	
+	public String getObjBank(Long ido) {
+		
+		ObjectPayment objRes = objectPaymentRepository.findByIdEquals(ido);
+		
+		if(objRes != null) {
+			
+			HttpHeaders header = new HttpHeaders();	
+			HttpEntity entity = new HttpEntity(objRes, header);
+					
+			String response = restTemplate.postForObject("http://localhost:8062/payment/bank", entity, String.class);
+			
+			return response;
+		}
+		return null;
+	}
 }

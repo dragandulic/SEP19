@@ -40,4 +40,15 @@ public class ObjectPaymentController {
 		
 	}
 	
+	
+	@GetMapping("/getobjectbank/{ido}")
+	public String getObjectBank(@PathVariable Long ido) {
+		
+		String res = objectPaymentService.getObjBank(ido);
+		
+		return res;
+		
+		
+	}
+	
 }
