@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.example.MSpaypal.controller.PayPalDTO;
 import com.example.MSpaypal.controller.PaymentMFDTO;
 import com.example.MSpaypal.controller.PaypalConfirmDTO;
 import com.paypal.api.payments.Amount;
@@ -30,12 +31,11 @@ public class PayPalService {
 	
 	
 	
-	public Map<String, Object> createPayment(PaymentMFDTO dto){
+	public Map<String, Object> createPayment(PayPalDTO dto){
 	    Map<String, Object> response = new HashMap<String, Object>();
 	    Amount amount = new Amount();
 	    amount.setCurrency("USD");
 	    String price=String.valueOf(dto.getAmount());
-	    System.out.println(price   + " Ovo je cenaaa");
 	    amount.setTotal(price);
 	    Transaction transaction = new Transaction();
 	    transaction.setAmount(amount);

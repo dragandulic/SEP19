@@ -36,13 +36,11 @@ public class PayPalController {
 	 
 	 
 
-	    @GetMapping(value = "/make/payment/{id}")
-	    public Map<String, Object> makePayment(@PathVariable Long id){
+	    @GetMapping(value = "/make/payment")
+	    public Map<String, Object> makePayment(@RequestBody PayPalDTO pp){
 	    	
-	    //	System.out.println(id + "ovo je id placanjaa");
-	    	
-	    	PaymentMFDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentMFDTO.class);
-	        return payPalService.createPayment(responsee);
+	    
+	        return payPalService.createPayment(pp);
 	    }
 	
 	
