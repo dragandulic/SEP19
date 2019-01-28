@@ -29,23 +29,23 @@ public class PaymentController {
 	private RestTemplate restTemplate; 
 	
 	
-	@GetMapping(value="/bitcoin/{id}")
-	public String payment(@PathVariable Long id){
+	@PostMapping(value="/bitcoin")
+	public String payment(@RequestBody PaymentObjDTO po){
 		
-		String idstring = Long.toString(id);
-		PaymentObjDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentObjDTO.class);      
+		//String idstring = Long.toString(id);
+		//PaymentObjDTO responsee = restTemplate.getForObject("http://localhost:8083/paymentobj/getPaymentObj/" + id, PaymentObjDTO.class);      
 
 		
 		
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("order_id", UUID.randomUUID().toString());
-		mapa.put("price_amount", responsee.getAmount());
+		mapa.put("price_amount", po.getAmount());
 		mapa.put("price_currency", "USD");
 		mapa.put("receive_currency", "USD");
-		mapa.put("title", responsee.getTitle());
-		mapa.put("description", responsee.getNameCustomer());
+		mapa.put("title", po.getTitle());
+		mapa.put("description", po.getDescription());
 		mapa.put("callback_url", "https://api-sandbox.coingate.com/account/orders");
-		//mapa.put("success_url", "...  ");
+		mapa.put("success_url", "http://localhost:3000/Successfully");
 		
 		
 		HttpHeaders header = new HttpHeaders();

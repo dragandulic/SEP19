@@ -1,6 +1,16 @@
 package com.example.MSbank.dto;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class PaymentObjDTO {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private Long idPaymentObj;
 	
@@ -14,7 +24,6 @@ public class PaymentObjDTO {
 	private String issnumberSeller;
 	private String merchant_id;
 	private String merchant_password;
-	
 	
 	private double amount;
 	
@@ -118,6 +127,14 @@ public class PaymentObjDTO {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
