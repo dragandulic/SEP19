@@ -32,9 +32,9 @@ public class ObjectPaymentService {
 	}
 	
 	
-	public String getObjBitcoin(Long ido) {
+	public String getObjBitcoin(String code) {
 		
-		ObjectPayment objRes = objectPaymentRepository.findByIdEquals(ido);
+		ObjectPayment objRes = objectPaymentRepository.findOneByCode(code);
 		
 		if(objRes != null) {
 			
@@ -65,9 +65,9 @@ public class ObjectPaymentService {
 	}
 	
 	
-	public String getObjBank(Long ido) {
+	public String getObjBank(String code) {
 		
-		ObjectPayment objRes = objectPaymentRepository.findByIdEquals(ido);
+		ObjectPayment objRes = objectPaymentRepository.findOneByCode(code);
 		
 		if(objRes != null) {
 			

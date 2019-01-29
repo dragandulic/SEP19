@@ -43,15 +43,15 @@ public class ObjectPaymentController {
 		
 		String res = objectPaymentService.savePaymentObject(ob);
 		
+		String res1="http://localhost:3000/id="+res;
 		
-		
-		return res;
+		return res1;
 	}
 	
-	@GetMapping("/getobjectbitcoin/{ido}")
-	public String getObjectBitcoin(@PathVariable Long ido) {
+	@GetMapping("/getobjectbitcoin/{code}")
+	public String getObjectBitcoin(@PathVariable String code) {
 		
-		String res = objectPaymentService.getObjBitcoin(ido);
+		String res = objectPaymentService.getObjBitcoin(code);
 		
 		return res;
 		
@@ -59,10 +59,10 @@ public class ObjectPaymentController {
 	}
 	
 	
-	@GetMapping("/getobjectbank/{ido}")
-	public String getObjectBank(@PathVariable Long ido) {
+	@GetMapping("/getobjectbank/{code}")
+	public String getObjectBank(@PathVariable String code) {
 		
-		String res = objectPaymentService.getObjBank(ido);
+		String res = objectPaymentService.getObjBank(code);
 		
 		return res;
 		
@@ -70,7 +70,7 @@ public class ObjectPaymentController {
 	}
 	
 	@GetMapping("/getobjectpaypal/{code}")
-	public String getObjectBitcoin(@PathVariable String code) {
+	public String getObjectPaypal(@PathVariable String code) {
 		
 		String res = objectPaymentService.getObjPaypal(code);
 		
