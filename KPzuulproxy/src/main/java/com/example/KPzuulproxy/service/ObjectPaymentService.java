@@ -18,13 +18,13 @@ public class ObjectPaymentService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	public Long savePaymentObject(ObjectPayment ob) {
+	public String savePaymentObject(ObjectPayment ob) {
 		
 		ObjectPayment objectp = objectPaymentRepository.save(ob);
 		
 		
 		if(objectp != null) {
-			return objectp.getId();	
+			return objectp.getCode();	
 		}
 		
 		return null;
@@ -48,6 +48,22 @@ public class ObjectPaymentService {
 		return null;
 	}
 	
+    public String getObjPaypal(String code) {
+		
+		ObjectPayment objRes = objectPaymentRepository.findOneByCode(code);
+		
+		if(objRes != null) {
+			
+			HttpHeaders header = new HttpHeaders();	
+			HttpEntity entity = new HttpEntity(objRes, header);
+					
+			String response = restTemplate.postForObject("http://localhost:8061/paypal/make/payment", entity, String.class);
+			
+			return response;
+		}
+		return null;
+	}
+	
 	
 	public String getObjBank(Long ido) {
 		
@@ -64,4 +80,24 @@ public class ObjectPaymentService {
 		}
 		return null;
 	}
+	
+	
+	public boolean checkUniqueCode(String cod){
+		
+		ObjectPayment o= objectPaymentRepository.findOneByCode(cod);
+		
+		
+		if(o==null){
+			return true;
+		}
+		else{
+			
+			return false;
+		}
+	}
+	
+	
+	
+	
+	
 }

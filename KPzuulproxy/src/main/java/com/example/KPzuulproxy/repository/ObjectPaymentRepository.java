@@ -10,5 +10,6 @@ public interface ObjectPaymentRepository extends JpaRepository<ObjectPayment, Lo
 
 	
 	ObjectPayment findByIdEquals(Long id);
+	ObjectPayment findOneByCode(String code);
 	
 }

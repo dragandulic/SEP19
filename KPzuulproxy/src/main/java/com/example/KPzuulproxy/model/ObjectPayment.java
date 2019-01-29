@@ -12,6 +12,8 @@ public class ObjectPayment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String code;
+	
 	private double amount;
 	
 	private String title;
@@ -21,6 +23,13 @@ public class ObjectPayment {
 	private String merchantid;
 
 	private String merchantpassword;
+	
+	private String clientId;
+	
+	private String clientSecret;
+	
+	private String successUrl;
+
 	
 	public ObjectPayment() {
 		
@@ -73,4 +82,39 @@ public class ObjectPayment {
 	public void setMerchantpassword(String merchantpassword) {
 		this.merchantpassword = merchantpassword;
 	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	public String getClientSecret() {
+		return clientSecret;
+	}
+
+	public void setClientSecret(String clientSecret) {
+		this.clientSecret = clientSecret;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getSuccessUrl() {
+		return successUrl;
+	}
+
+	public void setSuccessUrl(String successUrl) {
+		this.successUrl = successUrl;
+	}
+	
+	
+	
 }

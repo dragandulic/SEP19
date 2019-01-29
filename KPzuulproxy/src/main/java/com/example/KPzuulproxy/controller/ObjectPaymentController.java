@@ -1,5 +1,6 @@
 package com.example.KPzuulproxy.controller;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.service.ObjectPaymentService;
@@ -20,12 +22,28 @@ public class ObjectPaymentController {
 	private ObjectPaymentService objectPaymentService;
 	
 	@PostMapping("/savepaymentobject")
-	public Long savePaymentObject(@RequestBody ObjectPayment ob) {
+	public String savePaymentObject(@RequestBody ObjectPayment ob){
 		
 		
-		Long res = objectPaymentService.savePaymentObject(ob);
+		String generated= new String(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+		boolean check= objectPaymentService.checkUniqueCode(generated);
 		
-		System.out.println("SACUVAO PAYMENT OBJECT U KP, ID=" + res);
+		while(check!=true)
+		{
+			
+			generated= new String(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+			 check= objectPaymentService.checkUniqueCode(generated);
+		}
+		
+		
+			
+		ob.setCode(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+		
+		
+		
+		String res = objectPaymentService.savePaymentObject(ob);
+		
+		
 		
 		return res;
 	}
@@ -45,6 +63,16 @@ public class ObjectPaymentController {
 	public String getObjectBank(@PathVariable Long ido) {
 		
 		String res = objectPaymentService.getObjBank(ido);
+		
+		return res;
+		
+		
+	}
+	
+	@GetMapping("/getobjectpaypal/{code}")
+	public String getObjectBitcoin(@PathVariable String code) {
+		
+		String res = objectPaymentService.getObjPaypal(code);
 		
 		return res;
 		
