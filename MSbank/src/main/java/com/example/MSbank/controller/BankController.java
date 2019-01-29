@@ -14,8 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.MSbank.dto.PaymentObjDTO;
 import com.example.MSbank.model.Request;
-
-
+import com.example.MSbank.service.BankService;
 
 
 @RestController
@@ -23,30 +22,13 @@ import com.example.MSbank.model.Request;
 public class BankController {
 
 	@Autowired
-	private RestTemplate restTemplate;
+	private BankService bankService;
 	
 	@PostMapping("/bank")
 	public String getPaymentO(@RequestBody PaymentObjDTO po) {
 		
-		Request request = new Request();
-		request.setMerchant_id(po.getMerchantid());
-		request.setMerchant_password(po.getMerchantpassword());
-		request.setAmount(po.getAmount());
+		String res = bankService.findbank(po);
 		
-		HttpHeaders header = new HttpHeaders();
-		
-		HttpEntity entity = new HttpEntity(request, header);
-		
-		String res = restTemplate.postForObject("http://localhost:8097/request/checkrequest", entity, String.class);
-		
-		/*
-		if(!res.equals("neuspesno")) {
-			paymentObjDTOReposiotry.save(returnPaymentObj);
-			String res1 = res + "/id=" + returnPaymentObj.getId();
-			System.out.println("RES!!!!!!!!!!!!!!! " + res1);
-			return res1;
-		}
-		*/
 		return res;
 	}
 	

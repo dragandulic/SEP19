@@ -1,0 +1,2 @@
+INSERT INTO `msbank`.`bank` (`id`, `name`,`url`, `banknumber`) VALUES ('1','BankA','http://localhost:8097/request/checkrequest','977');
+INSERT INTO `msbank`.`bank` (`id`, `name`,`url`, `banknumber`) VALUES ('2','BankB','http://localhost:8097/request/checkrequest','411');
