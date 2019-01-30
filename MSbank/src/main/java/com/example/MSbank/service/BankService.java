@@ -42,14 +42,14 @@ public class BankService {
 			
 			String res = restTemplate.postForObject(b.getUrl(), entity, String.class);
 			
-			/*
+			
 			if(!res.equals("neuspesno")) {
-				paymentObjDTOReposiotry.save(returnPaymentObj);
-				String res1 = res + "/id=" + returnPaymentObj.getId();
+				
+				String res1 = res + "/id=" + po.getMerchantid();
 				System.out.println("RES!!!!!!!!!!!!!!! " + res1);
 				return res1;
 			}
-			*/
+			
 			return res;
 			
 		}
