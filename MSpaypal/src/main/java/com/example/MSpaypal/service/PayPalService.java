@@ -26,10 +26,6 @@ import com.paypal.base.rest.PayPalRESTException;
 public class PayPalService {
 	
 	
-	String clientId = "AYXs64yPx_es9JkYpmKDqXfFvcGkQ9PQc8GJhbXX-Q-TDxEFDy8TQfUSJrhHlixFxSW3X1rBq6y2tGL6"; //markivicius@hotmail.com
-	String clientSecret = "EGFJGDJ6dvWZqR4I8844WufT2XZi_3pZq7o-93b9PeBV5Ms-GDyDbBZnm-rF1WsMUZEIxFIZGoHKimlr";  //!paypalsep
-	
-	
 	
 	public Map<String, Object> createPayment(PayPalDTO dto){
 	    Map<String, Object> response = new HashMap<String, Object>();
@@ -51,14 +47,14 @@ public class PayPalService {
 	    payment.setTransactions(transactions);
 
 	    RedirectUrls redirectUrls = new RedirectUrls();
-	    redirectUrls.setCancelUrl("http://localhost:3006");
-	    redirectUrls.setReturnUrl("http://localhost:3006/#/success");
+	    redirectUrls.setCancelUrl(dto.getSuccessUrl());
+	    redirectUrls.setReturnUrl(dto.getSuccessUrl()+"/success");
 	    
 	    payment.setRedirectUrls(redirectUrls);
 	    Payment createdPayment;
 	    try {
 	        String redirectUrl = "";
-	        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+	        APIContext context = new APIContext(dto.getClientId(), dto.getClientSecret(), "sandbox");
 	        createdPayment = payment.create(context);
 	        if(createdPayment!=null){
 	            List<Links> links = createdPayment.getLinks();
@@ -94,7 +90,7 @@ public class PayPalService {
 	    PaymentExecution paymentExecution = new PaymentExecution();
 	    paymentExecution.setPayerId(req.getPayerID());
 	    try {
-	        APIContext context = new APIContext(clientId, clientSecret, "sandbox");
+	        APIContext context = new APIContext("Adx8jkEh9Spw-52awuJsOxPbgylg_ABQ1ToE4ig3Hk_ezhprEHrri84m7vSTlRmcVWEcYlBx-Br5jQvb","ECJy1OsgQbB1Sm4MzBo-5A_Fr-bn9jAgrR5EyEM4pak0yIH1quxkV9lHJK9fdykVLLjG346Wsllj0AxC", "sandbox");
 	        Payment createdPayment = payment.execute(context, paymentExecution);
 	        System.out.println(createdPayment);
 	        if(createdPayment!=null){
