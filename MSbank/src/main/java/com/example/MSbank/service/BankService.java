@@ -27,6 +27,9 @@ public class BankService {
 		request.setMerchant_id(po.getMerchantid());
 		request.setMerchant_password(po.getMerchantpassword());
 		request.setAmount(po.getAmount());
+		request.setSuccessurl("http://localhost:3000/Successfully");
+		request.setErrorurl("http://localhost:3000/error");
+		request.setFailedurl("http://localhost:3000/failed");
 		
 		String numberOfBank = "";
 		
