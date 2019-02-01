@@ -30,6 +30,7 @@ public class ObjectPayment {
 	
 	private String successUrl;
 
+	private boolean ispayment;
 	
 	public ObjectPayment() {
 		
@@ -113,6 +114,14 @@ public class ObjectPayment {
 
 	public void setSuccessUrl(String successUrl) {
 		this.successUrl = successUrl;
+	}
+
+	public boolean isIspayment() {
+		return ispayment;
+	}
+
+	public void setIspayment(boolean ispayment) {
+		this.ispayment = ispayment;
 	}
 	
 	
