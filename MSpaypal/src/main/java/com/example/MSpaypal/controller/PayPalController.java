@@ -36,7 +36,7 @@ public class PayPalController {
 	 
 	 
 
-	    @GetMapping(value = "/make/payment")
+	    @PostMapping(value = "/make/payment")
 	    public Map<String, Object> makePayment(@RequestBody PayPalDTO pp){
 	    	
 	    
