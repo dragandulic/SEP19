@@ -27,6 +27,10 @@ public class BankService {
 		request.setMerchant_id(po.getMerchantid());
 		request.setMerchant_password(po.getMerchantpassword());
 		request.setAmount(po.getAmount());
+		request.setSuccessurl("http://localhost:3000/Successfully");
+		request.setErrorurl("http://localhost:3000/error");
+		request.setFailedurl("http://localhost:3000/failed");
+		request.setMerchant_order_id(po.getCode());
 		
 		String numberOfBank = "";
 		
@@ -44,8 +48,8 @@ public class BankService {
 			
 			/*
 			if(!res.equals("neuspesno")) {
-				paymentObjDTOReposiotry.save(returnPaymentObj);
-				String res1 = res + "/id=" + returnPaymentObj.getId();
+				
+				String res1 = res + "/id=" + po.getMerchantid();
 				System.out.println("RES!!!!!!!!!!!!!!! " + res1);
 				return res1;
 			}

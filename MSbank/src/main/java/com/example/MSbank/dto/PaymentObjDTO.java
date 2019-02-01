@@ -20,6 +20,8 @@ public class PaymentObjDTO {
 	
 	private String merchantpassword;
 	
+	private String code;
+	
 	public PaymentObjDTO() {
 		
 	}
@@ -70,6 +72,14 @@ public class PaymentObjDTO {
 
 	public void setMerchantpassword(String merchantpassword) {
 		this.merchantpassword = merchantpassword;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

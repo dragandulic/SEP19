@@ -97,6 +97,20 @@ public class ObjectPaymentService {
 	}
 	
 	
+	public String successpayment(String code) {
+		
+		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
+		
+		if(o!=null) {
+			o.setIspayment(true);
+			objectPaymentRepository.save(o);
+			return "uspesno";
+		}
+		
+		return null;
+	}
+	
+	
 	
 	
 	

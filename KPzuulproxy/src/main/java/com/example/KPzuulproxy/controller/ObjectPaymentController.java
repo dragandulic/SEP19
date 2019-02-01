@@ -25,19 +25,19 @@ public class ObjectPaymentController {
 	public String savePaymentObject(@RequestBody ObjectPayment ob){
 		
 		
-		String generated= new String(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+		String generated= new String(RandomStringUtils.randomAlphanumeric(10).toUpperCase());
 		boolean check= objectPaymentService.checkUniqueCode(generated);
 		
 		while(check!=true)
 		{
 			
-			generated= new String(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+			generated= new String(RandomStringUtils.randomAlphanumeric(10).toUpperCase());
 			 check= objectPaymentService.checkUniqueCode(generated);
 		}
 		
 		
 			
-		ob.setCode(RandomStringUtils.randomAlphanumeric(7).toUpperCase());
+		ob.setCode(generated);
 		
 		
 		
@@ -78,5 +78,14 @@ public class ObjectPaymentController {
 		
 		
 	}
+	
+	@GetMapping("/successpayment/{code}")
+	public String successPayment(@PathVariable String code) {
+		
+		String res = objectPaymentService.successpayment(code);
+		
+		return res;
+	}
+	
 	
 }
