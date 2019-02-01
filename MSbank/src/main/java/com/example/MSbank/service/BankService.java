@@ -30,6 +30,7 @@ public class BankService {
 		request.setSuccessurl("http://localhost:3000/Successfully");
 		request.setErrorurl("http://localhost:3000/error");
 		request.setFailedurl("http://localhost:3000/failed");
+		request.setMerchant_order_id(po.getCode());
 		
 		String numberOfBank = "";
 		
