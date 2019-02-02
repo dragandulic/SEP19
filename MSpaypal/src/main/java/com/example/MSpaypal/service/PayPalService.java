@@ -49,7 +49,7 @@ public class PayPalService {
 
 	    RedirectUrls redirectUrls = new RedirectUrls();
 	    redirectUrls.setCancelUrl(dto.getSuccessUrl());
-	    redirectUrls.setReturnUrl(dto.getSuccessUrl()+"/success");
+	    redirectUrls.setReturnUrl("http://localhost:3000/paypal/success");
 	    
 	    payment.setRedirectUrls(redirectUrls);
 	    Payment createdPayment;
@@ -67,6 +67,7 @@ public class PayPalService {
 	            }
 	            response.put("status", "success");
 	            response.put("redirect_url", redirectUrl);
+	            response.put("client_url",dto.getSuccessUrl());
 	            System.out.println(redirectUrl);
 	        }
 	    } catch (PayPalRESTException e) {
@@ -81,8 +82,7 @@ public class PayPalService {
 	
 	public Map<String, Object> completePayment(PaypalConfirmDTO req){
 		
-		System.out.println(req.getPaymentId()+" Ovo je id od transakcije");
-		System.out.println(req.getPayerID()+ " Ovoje id kupcaaaaa");
+		
 	    Map<String, Object> response = new HashMap<String, Object>();
 	    Payment payment = new Payment();
 	    payment.setId(req.getPaymentId());
@@ -91,9 +91,10 @@ public class PayPalService {
 	    PaymentExecution paymentExecution = new PaymentExecution();
 	    paymentExecution.setPayerId(req.getPayerID());
 	    try {
-	        APIContext context = new APIContext("Adx8jkEh9Spw-52awuJsOxPbgylg_ABQ1ToE4ig3Hk_ezhprEHrri84m7vSTlRmcVWEcYlBx-Br5jQvb","ECJy1OsgQbB1Sm4MzBo-5A_Fr-bn9jAgrR5EyEM4pak0yIH1quxkV9lHJK9fdykVLLjG346Wsllj0AxC", "sandbox");
+	        APIContext context = new APIContext("Abfq6qRnGEz_CGD2-nVh3BuNVYl4OZgMDM8XK2qzeyhlku2dWy5QcgHg_gzQhlulUqqo8Dyhn5JWpEl2","EKoyrJq2z345XtWQ88lgQiR7gpxtdnldqkuZz_Ud3eNX5BwinXzMkP5Mq07Nj2qk9gne0k6sm5blF2Tm", "sandbox");
 	        Payment createdPayment = payment.execute(context, paymentExecution);
 	        System.out.println(createdPayment);
+	      
 	        if(createdPayment!=null){
 	            response.put("status", "success");
 	           // response.put("payment", createdPayment);
