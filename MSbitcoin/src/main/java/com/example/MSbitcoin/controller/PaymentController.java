@@ -35,7 +35,7 @@ public class PaymentController {
 		mapa.put("title", po.getTitle());
 		mapa.put("description", po.getDescription());
 		mapa.put("callback_url", "https://api-sandbox.coingate.com/account/orders");
-		mapa.put("success_url", "http://localhost:3000/Successfully");
+		mapa.put("success_url", "http://localhost:3000/bitcoin="+po.getCode());
 		
 		
 		HttpHeaders header = new HttpHeaders();
