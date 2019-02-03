@@ -85,7 +85,7 @@ public class ObjectPaymentController {
 		
 	}
 	
-	@GetMapping("/successpayment/{code}")
+	@PostMapping("/successpayment/{code}")
 	public String successPayment(@PathVariable String code, @RequestBody TransactionDTO dto) {
 		
 		String res = objectPaymentService.successpayment(code,dto);

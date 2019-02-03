@@ -44,6 +44,8 @@ public class ObjectPayment {
 	
 	private String paymentid;
 	
+	private String magazinename;
+	
 	public ObjectPayment() {
 		
 	}
@@ -182,6 +184,14 @@ public class ObjectPayment {
 
 	public void setPaymentid(String paymentid) {
 		this.paymentid = paymentid;
+	}
+
+	public String getMagazinename() {
+		return magazinename;
+	}
+
+	public void setMagazinename(String magazinename) {
+		this.magazinename = magazinename;
 	}
 
 

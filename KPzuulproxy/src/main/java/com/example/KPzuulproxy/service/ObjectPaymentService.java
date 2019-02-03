@@ -103,23 +103,38 @@ public class ObjectPaymentService {
 		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
 		
 		if(o!=null) {
-			o.setVerified(true);
-			o.setDescription(t.getDescription());
-			o.setType(t.getType());
-			o.setCurrency(t.getCurrency());
-			o.setMerchantmail(t.getMerchant());
-			o.setPayermail(t.getPayeremail());
-			o.setAmount(Double.parseDouble(t.getAmount())); //ja izvucem amount kao string
-			o.setDatetime(t.getTime());
-			o.setType(t.getType());
-			o.setPaymentid(t.getPaymentid()); // mozes izvuci id od placanja (npr u bitcoinu)cisto da imamo broj racuna koji je tamo reg.
+		
+			if(t.getType().equals("bitcoin") && t.getStatus().equals("paid")) {
+				o.setVerified(true);
+				o.setType(t.getType());
+				o.setCurrency(t.getCurrency());
+				o.setAmount(Double.parseDouble(t.getAmount()));
+				o.setDatetime(t.getTime());
+				o.setPaymentid(t.getPaymentid());
+				
+				objectPaymentRepository.save(o);
+			}
+			else {
+				o.setVerified(true);
+				o.setDescription(t.getDescription());
+				o.setType(t.getType());
+				o.setCurrency(t.getCurrency());
+				o.setMerchantmail(t.getMerchant());
+				o.setPayermail(t.getPayeremail());
+				o.setAmount(Double.parseDouble(t.getAmount())); //ja izvucem amount kao string
+				o.setDatetime(t.getTime());
+				o.setType(t.getType());
+				o.setPaymentid(t.getPaymentid()); // mozes izvuci id od placanja (npr u bitcoinu)cisto da imamo broj racuna koji je tamo reg.
+				
+				objectPaymentRepository.save(o);
+			}
+
 			
-			objectPaymentRepository.save(o);
 			
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(o, header);
 					
-			String response = restTemplate.postForObject(o.getSuccessUrl()+"/save/transaction", entity, String.class);
+			String response = restTemplate.postForObject(o.getSuccessUrl(), entity, String.class);
 			return "uspesno";
 		}
 		
