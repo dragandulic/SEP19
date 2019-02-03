@@ -90,13 +90,7 @@ public class ObjectPaymentController {
 		
 		String res = objectPaymentService.successpayment(code,dto);
 		
-		
-		
-		
-		
-		
-		
-		
+
 		return res;
 	}
 	
