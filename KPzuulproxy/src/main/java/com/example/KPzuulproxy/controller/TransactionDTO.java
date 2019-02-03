@@ -12,7 +12,7 @@ public class TransactionDTO {
 	private String merchant;
 	private String type;
 	private String currency;
-	private double amount;
+	private String amount;
 	
 	
 	
@@ -35,7 +35,7 @@ public class TransactionDTO {
 
 
 	public TransactionDTO(String status, String payment_method, String payeremail, String paymentid, String description,
-			String time, String merchant, String type, String currency, double amount) {
+			String time, String merchant, String type, String currency, String amount) {
 		super();
 		this.status = status;
 		this.payment_method = payment_method;
@@ -273,7 +273,7 @@ public class TransactionDTO {
 
 
 
-	public double getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
@@ -285,11 +285,19 @@ public class TransactionDTO {
 
 
 
-	public void setAmount(double amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-	
-	
+
+
+
+
+
+
+
+
+
+
 	
 	
 

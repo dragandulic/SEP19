@@ -109,7 +109,7 @@ public class ObjectPaymentService {
 			o.setCurrency(t.getCurrency());
 			o.setMerchantmail(t.getMerchant());
 			o.setPayermail(t.getPayeremail());
-			o.setAmount(t.getAmount());
+			o.setAmount(Double.parseDouble(t.getAmount())); //ja izvucem amount kao string
 			o.setCurrency(t.getCurrency());
 			o.setDatetime(t.getTime());
 			o.setType(t.getType());
