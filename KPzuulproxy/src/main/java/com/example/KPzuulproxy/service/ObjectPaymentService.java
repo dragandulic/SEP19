@@ -110,10 +110,9 @@ public class ObjectPaymentService {
 			o.setMerchantmail(t.getMerchant());
 			o.setPayermail(t.getPayeremail());
 			o.setAmount(Double.parseDouble(t.getAmount())); //ja izvucem amount kao string
-			o.setCurrency(t.getCurrency());
 			o.setDatetime(t.getTime());
 			o.setType(t.getType());
-			o.setPaymentid(t.getPaymentid());
+			o.setPaymentid(t.getPaymentid()); // mozes izvuci id od placanja (npr u bitcoinu)cisto da imamo broj racuna koji je tamo reg.
 			
 			objectPaymentRepository.save(o);
 			
