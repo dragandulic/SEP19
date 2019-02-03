@@ -30,7 +30,13 @@ public class ObjectPayment {
 	
 	private String successUrl;
 
-	private boolean ispayment;
+	private boolean verified;
+	
+	private String type; // bitcoin,paypal,bank account
+	
+	private String currency;
+	
+	private String datetime;
 	
 	public ObjectPayment() {
 		
@@ -116,13 +122,39 @@ public class ObjectPayment {
 		this.successUrl = successUrl;
 	}
 
-	public boolean isIspayment() {
-		return ispayment;
+	public boolean isVerified() {
+		return verified;
 	}
 
-	public void setIspayment(boolean ispayment) {
-		this.ispayment = ispayment;
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
+
+
 	
 	
 	

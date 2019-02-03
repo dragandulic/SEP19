@@ -102,7 +102,7 @@ public class ObjectPaymentService {
 		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
 		
 		if(o!=null) {
-			o.setIspayment(true);
+			o.setVerified(true);
 			objectPaymentRepository.save(o);
 			return "uspesno";
 		}
