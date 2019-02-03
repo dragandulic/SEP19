@@ -53,27 +53,19 @@ public class PaymentController {
 		
 		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
 		CreateOrderResponse c=  createOrderResponseRepository.save(response);
-		/*
-		PaymentBitcoinResponse retvalue = new PaymentBitcoinResponse();
-		retvalue.setPaymentURL(response.getPayment_url());
-		*/
+
 		String res = response.getPayment_url() + "," + c.getIdour();
-		System.out.println("CIRRRR " + res);
+		
 		return res;
 		
 		
 	}
 	
-	@GetMapping(value="/getorder/{id}")
-	public String getOrder(@PathVariable Long id) {
+	@GetMapping(value="/getorder/{id}/{code}")
+	public String getOrder(@PathVariable Long id, @PathVariable String code) {
 		
 		System.out.println("Dosao u metoduuuuuuuuuu " + id);
-		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);
-		
-		System.out.println("id " + cor.getId());
-		System.out.println("token " + cor.getToken());
-		System.out.println("orderid" + cor.getOrder_id());
-		
+		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);		
 		
 		HttpHeaders header = new HttpHeaders();
 		header.add("Authorization", "Token 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv");
@@ -83,13 +75,33 @@ public class PaymentController {
 
 		int ido = Integer.parseInt(cor.getId());
 		System.out.println("https://api-sandbox.coingate.com/v2/orders/" + cor.getId());
-		ResponseEntity<GetOrder> response = restTemplate.exchange("https://api.coingate.com/v2/orders/" + cor.getId(),
+		ResponseEntity<GetOrder> response = restTemplate.exchange("https://api-sandbox.coingate.com/v2/orders/" + cor.getId(),
 				HttpMethod.GET, entity, GetOrder.class);
 		
 		
-		System.out.println("ORDER ID" + response.getBody().getOrder_id());
 		
-		return "a";
+		if(response.getBody()!=null) {
+			
+			
+			Map<String, Object> mapa = new HashMap<>();
+			mapa.put("status", response.getBody().getStatus());
+			mapa.put("type", "bitcoin");
+			mapa.put("currency", response.getBody().getPay_currency());
+			mapa.put("amount", response.getBody().getPay_amount());
+			mapa.put("time", response.getBody().getCreated_at());
+			mapa.put("paymentid", response.getBody().getId());
+			
+			HttpHeaders h = new HttpHeaders();
+			
+			HttpEntity<Map<String, Object>> e = new HttpEntity<Map<String, Object>>(mapa, h);
+			
+			String re = restTemplate.postForObject("http://localhost:8051/objectpayment/successpayment/" + code, e, String.class);
+			return "uspesno";
+		}
+		
+		
+		
+		return "neuspesno";
 	}
 	
 	
