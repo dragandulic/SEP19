@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.MSpaypal.controller.PayPalDTO;
+import com.example.MSpaypal.controller.PayPalResponse;
 import com.example.MSpaypal.controller.PaymentMFDTO;
 import com.example.MSpaypal.controller.PaypalConfirmDTO;
 import com.paypal.api.payments.Amount;
@@ -80,10 +81,10 @@ public class PayPalService {
 	
 	
 	
-	public Map<String, Object> completePayment(PaypalConfirmDTO req){
+	public PayPalResponse completePayment(PaypalConfirmDTO req){
 		
-		
-	    Map<String, Object> response = new HashMap<String, Object>();
+		PayPalResponse response=new PayPalResponse();
+	    
 	    Payment payment = new Payment();
 	    payment.setId(req.getPaymentId());
 	    
@@ -96,7 +97,17 @@ public class PayPalService {
 	        System.out.println(createdPayment);
 	      
 	        if(createdPayment!=null){
-	            response.put("status", "success");
+	        	
+	            response.setStatus(createdPayment.getState());
+	            response.setPayeremail(createdPayment.getPayer().getPayerInfo().getEmail());
+	            response.setTime(createdPayment.getCreateTime());
+	            response.setPaymentid(createdPayment.getId());
+	            response.setMerchant(createdPayment.getTransactions().get(0).getPayee().getEmail());
+	            response.setPayment_method("paypal");
+	            response.setDescription("Membership for 30 days payment");
+	            
+	           
+	          
 	           // response.put("payment", createdPayment);
 	        }
 	    } catch (PayPalRESTException e) {

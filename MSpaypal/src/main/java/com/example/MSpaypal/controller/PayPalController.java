@@ -46,7 +46,7 @@ public class PayPalController {
 	
 	
 	    @PutMapping(value = "/complete/payment")
-	    public Map<String, Object> completePayment(@RequestBody PaypalConfirmDTO request){
+	    public PayPalResponse completePayment(@RequestBody PaypalConfirmDTO request){
 	        return payPalService.completePayment(request);
 	    }
 	    
