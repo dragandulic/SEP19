@@ -7,14 +7,20 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.MSbitcoin.dto.BitcoinResponseDTO;
+import com.example.MSbitcoin.dto.CreateOrderResponse;
+import com.example.MSbitcoin.dto.GetOrder;
 import com.example.MSbitcoin.dto.PaymentObjDTO;
+import com.example.MSbitcoin.repository.CreateOrderResponseRepository;
 import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 
 @RestController
@@ -23,6 +29,9 @@ public class PaymentController {
 
 	@Autowired
 	private RestTemplate restTemplate; 
+	
+	@Autowired
+	private CreateOrderResponseRepository createOrderResponseRepository;
 	
 	@PostMapping(value="/bitcoin")
 	public String payment(@RequestBody PaymentObjDTO po){
@@ -39,16 +48,50 @@ public class PaymentController {
 		
 		
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Token gAm4KxdZd4btLWZ2s_zsf9G8LEPmiE4RbNxqeDmV");
+		header.add("Authorization", "Token 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv");
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(mapa, header);
 		
-		BitcoinResponseDTO response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, BitcoinResponseDTO.class);
-		
+		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
+		CreateOrderResponse c=  createOrderResponseRepository.save(response);
+		/*
 		PaymentBitcoinResponse retvalue = new PaymentBitcoinResponse();
 		retvalue.setPaymentURL(response.getPayment_url());
-		return retvalue.getPaymentURL();
+		*/
+		String res = response.getPayment_url() + "," + c.getIdour();
+		System.out.println("CIRRRR " + res);
+		return res;
 		
 		
 	}
+	
+	@GetMapping(value="/getorder/{id}")
+	public String getOrder(@PathVariable Long id) {
+		
+		System.out.println("Dosao u metoduuuuuuuuuu " + id);
+		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);
+		
+		System.out.println("id " + cor.getId());
+		System.out.println("token " + cor.getToken());
+		System.out.println("orderid" + cor.getOrder_id());
+		
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Authorization", "Token 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv");
+		
+		HttpEntity entity = new HttpEntity(header);
+		
+
+		int ido = Integer.parseInt(cor.getId());
+		System.out.println("https://api-sandbox.coingate.com/v2/orders/" + cor.getId());
+		ResponseEntity<GetOrder> response = restTemplate.exchange("https://api.coingate.com/v2/orders/" + cor.getId(),
+				HttpMethod.GET, entity, GetOrder.class);
+		
+		
+		System.out.println("ORDER ID" + response.getBody().getOrder_id());
+		
+		return "a";
+	}
+	
+	
 	
 }

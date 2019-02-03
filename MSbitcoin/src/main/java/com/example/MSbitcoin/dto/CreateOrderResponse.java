@@ -1,9 +1,17 @@
 package com.example.MSbitcoin.dto;
 
-public class BitcoinResponseDTO {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class CreateOrderResponse {
 
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idour;
+	private String id;
 	private String status;
 	private String price_currency;
 	private String price_amount;
@@ -14,32 +22,19 @@ public class BitcoinResponseDTO {
 	private String payment_url;
 	private String token;
 	
-	private BitcoinResponseDTO() {
+	private CreateOrderResponse() {
 		
 	}
 	
 	
-	public BitcoinResponseDTO(Long id, String status, String price_currency, String price_amount,
-			String receive_currency, String receive_amount, String created_at, String order_id, String payment_url,
-			String token) {
-		this.id = id;
-		this.status = status;
-		this.price_currency = price_currency;
-		this.price_amount = price_amount;
-		this.receive_currency = receive_currency;
-		this.receive_amount = receive_amount;
-		this.created_at = created_at;
-		this.order_id = order_id;
-		this.payment_url = payment_url;
-		this.token = token;
-	}
 	
 	
 	
-	public Long getId() {
+	
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getStatus() {
@@ -95,6 +90,24 @@ public class BitcoinResponseDTO {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+
+
+
+
+
+	public Long getIdour() {
+		return idour;
+	}
+
+
+
+
+
+
+	public void setIdour(Long idour) {
+		this.idour = idour;
 	}
 	
 	
