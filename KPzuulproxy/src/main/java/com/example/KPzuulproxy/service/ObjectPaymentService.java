@@ -109,6 +109,11 @@ public class ObjectPaymentService {
 			o.setCurrency(t.getCurrency());
 			o.setMerchantmail(t.getMerchant());
 			o.setPayermail(t.getPayeremail());
+			o.setAmount(t.getAmount());
+			o.setCurrency(t.getCurrency());
+			o.setDatetime(t.getTime());
+			o.setType(t.getType());
+			o.setPaymentid(t.getPaymentid());
 			
 			objectPaymentRepository.save(o);
 			

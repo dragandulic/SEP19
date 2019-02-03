@@ -42,6 +42,8 @@ public class ObjectPayment {
 	
 	private String payermail;
 	
+	private String paymentid;
+	
 	public ObjectPayment() {
 		
 	}
@@ -172,6 +174,14 @@ public class ObjectPayment {
 
 	public void setPayermail(String payermail) {
 		this.payermail = payermail;
+	}
+
+	public String getPaymentid() {
+		return paymentid;
+	}
+
+	public void setPaymentid(String paymentid) {
+		this.paymentid = paymentid;
 	}
 
 
