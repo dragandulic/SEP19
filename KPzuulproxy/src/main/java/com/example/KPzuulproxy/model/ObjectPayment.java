@@ -38,6 +38,10 @@ public class ObjectPayment {
 	
 	private String datetime;
 	
+	private String merchantmail;
+	
+	private String payermail;
+	
 	public ObjectPayment() {
 		
 	}
@@ -152,6 +156,22 @@ public class ObjectPayment {
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
+	}
+
+	public String getMerchantmail() {
+		return merchantmail;
+	}
+
+	public void setMerchantmail(String merchantmail) {
+		this.merchantmail = merchantmail;
+	}
+
+	public String getPayermail() {
+		return payermail;
+	}
+
+	public void setPayermail(String payermail) {
+		this.payermail = payermail;
 	}
 
 

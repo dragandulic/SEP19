@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.KPzuulproxy.controller.TransactionDTO;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 
@@ -97,13 +98,24 @@ public class ObjectPaymentService {
 	}
 	
 	
-	public String successpayment(String code) {
+	public String successpayment(String code,TransactionDTO t) {
 		
 		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
 		
 		if(o!=null) {
 			o.setVerified(true);
+			o.setDescription(t.getDescription());
+			o.setType(t.getType());
+			o.setCurrency(t.getCurrency());
+			o.setMerchantmail(t.getMerchant());
+			o.setPayermail(t.getPayeremail());
+			
 			objectPaymentRepository.save(o);
+			
+			HttpHeaders header = new HttpHeaders();	
+			HttpEntity entity = new HttpEntity(o, header);
+					
+			String response = restTemplate.postForObject(o.getSuccessUrl()+"/save/transaction", entity, String.class);
 			return "uspesno";
 		}
 		

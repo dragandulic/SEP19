@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.example.KPzuulproxy.model.ObjectPayment;
+import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 import com.example.KPzuulproxy.service.ObjectPaymentService;
 
 @RestController
@@ -20,6 +21,11 @@ public class ObjectPaymentController {
 	
 	@Autowired
 	private ObjectPaymentService objectPaymentService;
+	
+	
+
+	
+	
 	
 	@PostMapping("/savepaymentobject")
 	public String savePaymentObject(@RequestBody ObjectPayment ob){
@@ -80,9 +86,16 @@ public class ObjectPaymentController {
 	}
 	
 	@GetMapping("/successpayment/{code}")
-	public String successPayment(@PathVariable String code) {
+	public String successPayment(@PathVariable String code, @RequestBody TransactionDTO dto) {
 		
-		String res = objectPaymentService.successpayment(code);
+		String res = objectPaymentService.successpayment(code,dto);
+		
+		
+		
+		
+		
+		
+		
 		
 		return res;
 	}
