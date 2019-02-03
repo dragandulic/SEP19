@@ -103,8 +103,10 @@ public class PayPalService {
 	            response.setTime(createdPayment.getCreateTime());
 	            response.setPaymentid(createdPayment.getId());
 	            response.setMerchant(createdPayment.getTransactions().get(0).getPayee().getEmail());
-	            response.setPayment_method("paypal");
-	            response.setDescription("Membership for 30 days payment");
+	            response.setDescription(createdPayment.getTransactions().get(0).getDescription());
+	            response.setAmount(createdPayment.getTransactions().get(0).getAmount().getTotal());
+	            response.setType("paypal");
+	            response.setCurrency("USD");
 	            
 	           
 	          

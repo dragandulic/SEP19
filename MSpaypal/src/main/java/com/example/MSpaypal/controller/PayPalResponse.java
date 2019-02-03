@@ -4,14 +4,15 @@ public class PayPalResponse {
 	
 	
 	private String status;
-	private String payment_method;
 	private String payeremail;
 	private String paymentid;
 	private String description;
-	private String payername;
-	private String payersurname;
 	private String time;
 	private String merchant;
+	private String currency;
+	private String type;
+	private String amount;
+	
 	
 	
 	
@@ -20,9 +21,31 @@ public class PayPalResponse {
 	}
 
 
+
+
+	public PayPalResponse(String status,String payeremail, String paymentid, String description,
+			String time, String merchant, String currency, String type, String amount) {
+		super();
+		this.status = status;
+	
+		this.payeremail = payeremail;
+		this.paymentid = paymentid;
+		this.description = description;
+		this.time = time;
+		this.merchant = merchant;
+		this.currency = currency;
+		this.type = type;
+		this.amount = amount;
+	}
+
+
+
+
 	public String getStatus() {
 		return status;
 	}
+
+
 
 
 	public void setStatus(String status) {
@@ -30,14 +53,6 @@ public class PayPalResponse {
 	}
 
 
-	public String getPayment_method() {
-		return payment_method;
-	}
-
-
-	public void setPayment_method(String payment_method) {
-		this.payment_method = payment_method;
-	}
 
 
 	public String getPayeremail() {
@@ -45,9 +60,13 @@ public class PayPalResponse {
 	}
 
 
+
+
 	public void setPayeremail(String payeremail) {
 		this.payeremail = payeremail;
 	}
+
+
 
 
 	public String getPaymentid() {
@@ -55,9 +74,13 @@ public class PayPalResponse {
 	}
 
 
+
+
 	public void setPaymentid(String paymentid) {
 		this.paymentid = paymentid;
 	}
+
+
 
 
 	public String getDescription() {
@@ -65,29 +88,12 @@ public class PayPalResponse {
 	}
 
 
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
-	public String getPayername() {
-		return payername;
-	}
-
-
-	public void setPayername(String payername) {
-		this.payername = payername;
-	}
-
-
-	public String getPayersurname() {
-		return payersurname;
-	}
-
-
-	public void setPayersurname(String payersurname) {
-		this.payersurname = payersurname;
-	}
 
 
 
@@ -96,9 +102,13 @@ public class PayPalResponse {
 	}
 
 
+
+
 	public void setTime(String time) {
 		this.time = time;
 	}
+
+
 
 
 	public String getMerchant() {
@@ -106,11 +116,59 @@ public class PayPalResponse {
 	}
 
 
+
+
 	public void setMerchant(String merchant) {
 		this.merchant = merchant;
 	}
+
+
+
+
+	public String getCurrency() {
+		return currency;
+	}
+
+
+
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+
+
+	public String getAmount() {
+		return amount;
+	}
+
+
+
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
 	
 	
+	
+
+
+
 	
 	
 	

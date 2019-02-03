@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import com.example.MSpaypal.service.PayPalService;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 
 
@@ -45,6 +46,7 @@ public class PayPalController {
 	
 	
 	
+	    @JsonValue
 	    @PutMapping(value = "/complete/payment")
 	    public PayPalResponse completePayment(@RequestBody PaypalConfirmDTO request){
 	        return payPalService.completePayment(request);
