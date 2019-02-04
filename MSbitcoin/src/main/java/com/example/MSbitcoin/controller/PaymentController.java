@@ -39,8 +39,8 @@ public class PaymentController {
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("order_id", UUID.randomUUID().toString());
 		mapa.put("price_amount", po.getAmount());
-		mapa.put("price_currency", "USD");
-		mapa.put("receive_currency", "USD");
+		mapa.put("price_currency", "EUR");
+		mapa.put("receive_currency", "EUR");
 		mapa.put("title", po.getTitle());
 		mapa.put("description", po.getDescription());
 		mapa.put("callback_url", "https://api-sandbox.coingate.com/account/orders");
