@@ -113,6 +113,13 @@ public class ObjectPaymentService {
 				o.setPaymentid(t.getPaymentid());
 				
 				objectPaymentRepository.save(o);
+			}else if(t.getType().equals("bank") && t.getStatus().equals("paid")) {
+				o.setVerified(true);
+				o.setType(t.getType());
+				o.setCurrency(t.getCurrency());
+				o.setDatetime(t.getTime());
+				
+				objectPaymentRepository.save(o);
 			}
 			else {
 				o.setVerified(true);
