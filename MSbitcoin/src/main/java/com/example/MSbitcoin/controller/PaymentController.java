@@ -87,7 +87,7 @@ public class PaymentController {
 			mapa.put("status", response.getBody().getStatus());
 			mapa.put("type", "bitcoin");
 			mapa.put("currency", response.getBody().getPay_currency());
-			mapa.put("amount", response.getBody().getPay_amount());
+			mapa.put("amount", response.getBody().getPrice_amount());
 			mapa.put("time", response.getBody().getCreated_at());
 			mapa.put("paymentid", response.getBody().getId());
 			
