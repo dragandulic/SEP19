@@ -142,7 +142,7 @@ public class ObjectPaymentService {
 			HttpEntity entity = new HttpEntity(o, header);
 					
 			String response = restTemplate.postForObject(o.getSuccessUrl(), entity, String.class);
-			return "uspesno";
+			return "success";
 		}
 		
 		return null;
