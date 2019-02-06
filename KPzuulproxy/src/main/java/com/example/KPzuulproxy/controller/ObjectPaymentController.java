@@ -23,7 +23,8 @@ public class ObjectPaymentController {
 	private ObjectPaymentService objectPaymentService;
 	
 	
-
+	@Autowired
+	private ObjectPaymentRepository objectPaymentRepository;
 	
 	
 	
@@ -94,5 +95,15 @@ public class ObjectPaymentController {
 		return res;
 	}
 	
-	
+	@GetMapping("/gotonc/{code}")
+	public String goToNc(@PathVariable String code) {
+		
+		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
+		
+		if(o!=null) {
+			return o.getFronturl();
+		}
+
+		return null;
+	}
 }

@@ -46,6 +46,8 @@ public class ObjectPayment {
 	
 	private String magazinename;
 	
+	private String fronturl;
+	
 	public ObjectPayment() {
 		
 	}
@@ -192,6 +194,14 @@ public class ObjectPayment {
 
 	public void setMagazinename(String magazinename) {
 		this.magazinename = magazinename;
+	}
+
+	public String getFronturl() {
+		return fronturl;
+	}
+
+	public void setFronturl(String fronturl) {
+		this.fronturl = fronturl;
 	}
 
 
