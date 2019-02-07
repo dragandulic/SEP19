@@ -50,7 +50,7 @@ public class ObjectPaymentController {
 		
 		String res = objectPaymentService.savePaymentObject(ob);
 		if(ob.getDescription().equals("Membership fee for 30 days")){
-			String res1="http://localhost:3000/membership/id="+res;
+			String res1="http://localhost:3000/paypal="+res;
 			return res1;
 		}
 		else{
