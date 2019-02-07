@@ -17,6 +17,8 @@ public class PaymentObjDTO {
 	
 	private String code;
 	
+	private String bitcointoken;
+	
 	public PaymentObjDTO() {
 		
 	}
@@ -59,6 +61,14 @@ public class PaymentObjDTO {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getBitcointoken() {
+		return bitcointoken;
+	}
+
+	public void setBitcointoken(String bitcointoken) {
+		this.bitcointoken = bitcointoken;
 	}
 
 

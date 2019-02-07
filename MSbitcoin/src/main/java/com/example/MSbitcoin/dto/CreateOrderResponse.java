@@ -21,6 +21,7 @@ public class CreateOrderResponse {
 	private String order_id;
 	private String payment_url;
 	private String token;
+	private String bitcointoken;
 	
 	private CreateOrderResponse() {
 		
@@ -108,6 +109,24 @@ public class CreateOrderResponse {
 
 	public void setIdour(Long idour) {
 		this.idour = idour;
+	}
+
+
+
+
+
+
+	public String getBitcointoken() {
+		return bitcointoken;
+	}
+
+
+
+
+
+
+	public void setBitcointoken(String bitcointoken) {
+		this.bitcointoken = bitcointoken;
 	}
 	
 	

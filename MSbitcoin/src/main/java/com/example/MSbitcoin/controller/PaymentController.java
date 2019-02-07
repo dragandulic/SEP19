@@ -48,10 +48,11 @@ public class PaymentController {
 		
 		
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Token F5rxiWLazEaQC4yyDyh5nwAReRGUHbRQQevz426J");
+		header.add("Authorization", "Token " + po.getBitcointoken());
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(mapa, header);
 		
 		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
+		response.setBitcointoken(po.getBitcointoken());
 		CreateOrderResponse c=  createOrderResponseRepository.save(response);
 
 		String res = response.getPayment_url() + "," + c.getIdour();
@@ -66,9 +67,11 @@ public class PaymentController {
 		
 		System.out.println("Dosao u metoduuuuuuuuuu " + id);
 		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);		
+		System.out.println("TOKEN: " + cor.getToken());
+		System.out.println("BITCOIN TOKEN: " + cor.getBitcointoken());
 		
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Token 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv");
+		header.add("Authorization", "Token " + cor.getBitcointoken());
 		
 		HttpEntity entity = new HttpEntity(header);
 		
@@ -109,12 +112,22 @@ public class PaymentController {
 			//matematicki vesik 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv
 			
 			/* 1.
-			 * gradjevinarstvo token: dCJnxHQ1f6Q3HQXfJWqoKRgFuDyfMMLeWFw-FNGN
+			 * gradjevinarstvo TOKEN: dCJnxHQ1f6Q3HQXfJWqoKRgFuDyfMMLeWFw-FNGN
 			 * API KEY: tVAdjZqnwefvTWlSBhK40J
 			 * API SECRET: BE1OZlpyijP0AMmchJdxL8oYgf56XHIN
 			 */
 	
-				
-	
+			 /* 2.
+			  * tehnikovic TOKEN: VYAwg4CCyDxZDyLeRXinbSkJ6DzGbGQwFFK4utH2
+			  * API KEY: wbLUSc1WABvDugaEmpn8QO
+			  * AOI SECRET: rHS85EtMxnB2ULeFvcb43lJIRPWZQwVf
+			  */
+			
+	 		 /* 3.
+	 		  * bankaric TOKEN: 63ia_f8W5zsz3yhZmgomWgJ7bqziwLiiQu9eYAmZ
+	 		  * API KEY: QurajGlxOVScFZt39UWK4e
+	 		  * API SECRTE: 8KpY0c9HRUhMfOi2noybu1SQxzZkIWr4
+	 		  * 
+	 		  */
 	
 }
