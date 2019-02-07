@@ -31,7 +31,7 @@ public class PayPalService {
 	public Map<String, Object> createPayment(PayPalDTO dto){
 	    Map<String, Object> response = new HashMap<String, Object>();
 	    Amount amount = new Amount();
-	    amount.setCurrency("USD");
+	    amount.setCurrency("EUR");
 	    String price=String.valueOf(dto.getAmount());
 	    amount.setTotal(price);
 	    Transaction transaction = new Transaction();
@@ -69,6 +69,8 @@ public class PayPalService {
 	            response.put("status", "success");
 	            response.put("redirect_url", redirectUrl);
 	            response.put("client_url",dto.getSuccessUrl());
+	            response.put("clientId",dto.getClientId());
+	            response.put("clientSecret",dto.getClientSecret());
 	            System.out.println(redirectUrl);
 	        }
 	    } catch (PayPalRESTException e) {
@@ -92,13 +94,13 @@ public class PayPalService {
 	    PaymentExecution paymentExecution = new PaymentExecution();
 	    paymentExecution.setPayerId(req.getPayerID());
 	    try {
-	        APIContext context = new APIContext("Abfq6qRnGEz_CGD2-nVh3BuNVYl4OZgMDM8XK2qzeyhlku2dWy5QcgHg_gzQhlulUqqo8Dyhn5JWpEl2","EKoyrJq2z345XtWQ88lgQiR7gpxtdnldqkuZz_Ud3eNX5BwinXzMkP5Mq07Nj2qk9gne0k6sm5blF2Tm", "sandbox");
+	        APIContext context = new APIContext(req.getClientId(),req.getClientSecret(), "sandbox");
 	        Payment createdPayment = payment.execute(context, paymentExecution);
 	        System.out.println(createdPayment);
 	      
 	        if(createdPayment!=null){
 	        	
-	            response.setStatus(createdPayment.getState());
+	            response.setStatus("paid");
 	            response.setPayeremail(createdPayment.getPayer().getPayerInfo().getEmail());
 	            response.setTime(createdPayment.getCreateTime());
 	            response.setPaymentid(createdPayment.getId());
@@ -106,7 +108,7 @@ public class PayPalService {
 	            response.setDescription(createdPayment.getTransactions().get(0).getDescription());
 	            response.setAmount(createdPayment.getTransactions().get(0).getAmount().getTotal());
 	            response.setType("paypal");
-	            response.setCurrency("USD");
+	            response.setCurrency("EUR");
 	            
 	           
 	          
