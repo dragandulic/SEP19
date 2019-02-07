@@ -48,7 +48,7 @@ public class PaymentController {
 		
 		
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Token 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv");
+		header.add("Authorization", "Token F5rxiWLazEaQC4yyDyh5nwAReRGUHbRQQevz426J");
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<Map<String, Object>>(mapa, header);
 		
 		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
@@ -104,6 +104,17 @@ public class PaymentController {
 		return "neuspesno";
 	}
 	
+
+			//tehnika F5rxiWLazEaQC4yyDyh5nwAReRGUHbRQQevz426J
+			//matematicki vesik 1w731yKubAxdtzZix4wRKvrbAYyKeXSs4zf26BPv
+			
+			/* 1.
+			 * gradjevinarstvo token: dCJnxHQ1f6Q3HQXfJWqoKRgFuDyfMMLeWFw-FNGN
+			 * API KEY: tVAdjZqnwefvTWlSBhK40J
+			 * API SECRET: BE1OZlpyijP0AMmchJdxL8oYgf56XHIN
+			 */
+	
+				
 	
 	
 }
