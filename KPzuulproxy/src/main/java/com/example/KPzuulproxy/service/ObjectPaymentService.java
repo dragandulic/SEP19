@@ -100,6 +100,8 @@ public class ObjectPaymentService {
 	
 	public String successpayment(String code,TransactionDTO t) {
 		
+		System.out.println("USAO SAM U POTVRDUU");
+		
 		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
 		
 		if(o!=null) {
