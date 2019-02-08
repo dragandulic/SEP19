@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.KPzuulproxy.controller.TransactionDTO;
+import com.example.KPzuulproxy.controller.UrlResponse;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 
@@ -50,7 +51,7 @@ public class ObjectPaymentService {
 	}
 	
     public String getObjPaypal(String code) {
-		
+		  
 		ObjectPayment objRes = objectPaymentRepository.findOneByCode(code);
 		
 		if(objRes != null) {
@@ -98,7 +99,7 @@ public class ObjectPaymentService {
 	}
 	
 	
-	public String successpayment(String code,TransactionDTO t) {
+	public UrlResponse successpayment(String code,TransactionDTO t) {
 		
 		System.out.println("USAO SAM U POTVRDUU");
 		
@@ -143,8 +144,14 @@ public class ObjectPaymentService {
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(o, header);
 					
+			UrlResponse resp=new UrlResponse();
 			String response = restTemplate.postForObject(o.getSuccessUrl(), entity, String.class);
-			return "success";
+			System.out.println(response);
+			
+			String returnurl=new String(o.getFronturl());
+			System.out.println(returnurl + " OVO JE URLLL");
+			resp.setFronturl(returnurl);
+			return resp;
 		}
 		
 		return null;
