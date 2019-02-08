@@ -30,7 +30,7 @@ public class ObjectPaymentController {
 	
 	@PostMapping("/savepaymentobject")
 	public String savePaymentObject(@RequestBody ObjectPayment ob){
-		
+		System.out.println("DOSAOOOOOOO: " + ob.getDescription());
 		
 		String generated= new String(RandomStringUtils.randomAlphanumeric(10).toUpperCase());
 		boolean check= objectPaymentService.checkUniqueCode(generated);
@@ -50,11 +50,11 @@ public class ObjectPaymentController {
 		
 		String res = objectPaymentService.savePaymentObject(ob);
 		if(ob.getDescription().equals("Membership fee for 30 days")){
-			String res1="http://localhost:3000/paypal="+res;
+			String res1="http://192.168.0.26:3000/paypal="+res;
 			return res1;
 		}
 		else{
-		String res1="http://localhost:3000/id="+res;
+		String res1="http://192.168.0.26:3000/id="+res;
 		return res1;
 		}
 		
