@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.KPzuulproxy.dto.DataLoaderComponent;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 import com.example.KPzuulproxy.service.ObjectPaymentService;
@@ -26,6 +26,8 @@ public class ObjectPaymentController {
 	@Autowired
 	private ObjectPaymentRepository objectPaymentRepository;
 	
+	@Autowired
+	private DataLoaderComponent dataLoaderComponent;
 	
 	
 	@PostMapping("/savepaymentobject")
@@ -50,11 +52,15 @@ public class ObjectPaymentController {
 		
 		String res = objectPaymentService.savePaymentObject(ob);
 		if(ob.getDescription().equals("Membership fee for 30 days")){
-			String res1="http://localhost:3000/paypal="+res;
+			String res1="http://" + dataLoaderComponent.getIp() + ":3000/paypal="+res;
+			return res1;
+		}
+		else if(ob.getTitle().contains("Placanje clanarine")) {
+			String res1="http://" + dataLoaderComponent.getIp() + ":3000/paypal="+res;
 			return res1;
 		}
 		else{
-		String res1="http://localhost:3000/id="+res;
+		String res1="http://" + dataLoaderComponent.getIp() + ":3000/id="+res;
 		return res1;
 		}
 		
@@ -93,10 +99,10 @@ public class ObjectPaymentController {
 	
 	@PostMapping("/successpayment/{code}")
 	public UrlResponse successPayment(@PathVariable String code, @RequestBody TransactionDTO dto) {
-		
+		System.out.println("CODEE: " + code);
 		UrlResponse res = objectPaymentService.successpayment(code,dto);
 		
-
+		System.out.println("MEDOA KP");
 		return res;
 	}
 	

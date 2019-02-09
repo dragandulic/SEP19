@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import org.apache.log4j.Logger;
+
+
 import com.example.MSbitcoin.dto.CreateOrderResponse;
+import com.example.MSbitcoin.dto.DataLoaderComponent;
 import com.example.MSbitcoin.dto.GetOrder;
 import com.example.MSbitcoin.dto.PaymentObjDTO;
+import com.example.MSbitcoin.dto.UrlResponse;
 import com.example.MSbitcoin.repository.CreateOrderResponseRepository;
 import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 
@@ -27,14 +32,22 @@ import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 @RequestMapping("/payment")
 public class PaymentController {
 
+	private Logger logger = Logger.getLogger(PaymentController.class);
+	
+	
 	@Autowired
 	private RestTemplate restTemplate; 
 	
 	@Autowired
 	private CreateOrderResponseRepository createOrderResponseRepository;
 	
+	@Autowired
+	private DataLoaderComponent dataLoaderComponent;
+	
 	@PostMapping(value="/bitcoin")
 	public String payment(@RequestBody PaymentObjDTO po){
+		
+		
 		
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("order_id", UUID.randomUUID().toString());
@@ -44,7 +57,7 @@ public class PaymentController {
 		mapa.put("title", po.getTitle());
 		mapa.put("description", po.getDescription());
 		mapa.put("callback_url", "https://api-sandbox.coingate.com/account/orders");
-		mapa.put("success_url", "http://localhost:3000/bitcoin="+po.getCode());
+		mapa.put("success_url", "http://" + dataLoaderComponent.getIp() + ":3000/bitcoin="+po.getCode());
 		
 		
 		HttpHeaders header = new HttpHeaders();
@@ -53,8 +66,12 @@ public class PaymentController {
 		
 		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
 		response.setBitcointoken(po.getBitcointoken());
+		if(response !=null) {
+			logger.info("Method: payment -> Successfuly create order, id=" + response.getId());
+		}
+		
 		CreateOrderResponse c=  createOrderResponseRepository.save(response);
-
+		
 		String res = response.getPayment_url() + "," + c.getIdour();
 		
 		return res;
@@ -65,23 +82,21 @@ public class PaymentController {
 	@GetMapping(value="/getorder/{id}/{code}")
 	public String getOrder(@PathVariable Long id, @PathVariable String code) {
 		
-		System.out.println("Dosao u metoduuuuuuuuuu " + id);
-		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);		
-		System.out.println("TOKEN: " + cor.getToken());
-		System.out.println("BITCOIN TOKEN: " + cor.getBitcointoken());
 		
+		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);		
+	
 		HttpHeaders header = new HttpHeaders();
 		header.add("Authorization", "Token " + cor.getBitcointoken());
 		
 		HttpEntity entity = new HttpEntity(header);
 		
-
+		
 		int ido = Integer.parseInt(cor.getId());
-		System.out.println("https://api-sandbox.coingate.com/v2/orders/" + cor.getId());
+		
 		ResponseEntity<GetOrder> response = restTemplate.exchange("https://api-sandbox.coingate.com/v2/orders/" + cor.getId(),
 				HttpMethod.GET, entity, GetOrder.class);
 		
-		
+		logger.info("Method: getOredr -> Order id=" + response.getBody().getOrder_id());
 		
 		if(response.getBody()!=null) {
 			
@@ -98,7 +113,8 @@ public class PaymentController {
 			
 			HttpEntity<Map<String, Object>> e = new HttpEntity<Map<String, Object>>(mapa, h);
 			
-			String re = restTemplate.postForObject("http://localhost:8051/objectpayment/successpayment/" + code, e, String.class);
+			UrlResponse re = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8051/objectpayment/successpayment/" + code, e, UrlResponse.class);
+			logger.info("Method: getOredr -> Successfuly save transaction");
 			return "uspesno";
 		}
 		

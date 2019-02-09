@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.KPzuulproxy.controller.TransactionDTO;
 import com.example.KPzuulproxy.controller.UrlResponse;
+import com.example.KPzuulproxy.dto.DataLoaderComponent;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 
@@ -16,6 +17,9 @@ public class ObjectPaymentService {
 
 	@Autowired
 	private ObjectPaymentRepository objectPaymentRepository;
+	
+	@Autowired
+	private DataLoaderComponent dataLoaderComponent;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -42,9 +46,10 @@ public class ObjectPaymentService {
 			
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(objRes, header);
-					
-			String response = restTemplate.postForObject("http://localhost:8060/payment/bitcoin", entity, String.class);
-			System.out.println("Responseeeee " + response);
+			
+			
+			String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8060/payment/bitcoin", entity, String.class);
+			
 			return response;
 		}
 		return null;
@@ -76,7 +81,7 @@ public class ObjectPaymentService {
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(objRes, header);
 					
-			String response = restTemplate.postForObject("http://localhost:8062/payment/bank", entity, String.class);
+			String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8062/payment/bank", entity, String.class);
 			
 			return response;
 		}
@@ -101,7 +106,6 @@ public class ObjectPaymentService {
 	
 	public UrlResponse successpayment(String code,TransactionDTO t) {
 		
-		System.out.println("USAO SAM U POTVRDUU");
 		
 		ObjectPayment o = objectPaymentRepository.findOneByCode(code);
 		
@@ -145,8 +149,9 @@ public class ObjectPaymentService {
 			HttpEntity entity = new HttpEntity(o, header);
 					
 			UrlResponse resp=new UrlResponse();
+			System.out.println("PREEEEEEEEE " + o.getSuccessUrl());
 			String response = restTemplate.postForObject(o.getSuccessUrl(), entity, String.class);
-			System.out.println(response);
+			System.out.println("POSLEEEEE");
 			
 			String returnurl=new String(o.getFronturl());
 			System.out.println(returnurl + " OVO JE URLLL");

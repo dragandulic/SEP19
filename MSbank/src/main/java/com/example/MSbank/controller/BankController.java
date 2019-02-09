@@ -2,7 +2,7 @@ package com.example.MSbank.controller;
 
 import java.util.Map;
 
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,13 +21,19 @@ import com.example.MSbank.service.BankService;
 @RequestMapping("/payment")
 public class BankController {
 
+	private Logger logger = Logger.getLogger(BankController.class);
+	
 	@Autowired
 	private BankService bankService;
 	
 	@PostMapping("/bank")
 	public String getPaymentO(@RequestBody PaymentObjDTO po) {
 		
+		logger.info("Method: getPaymentO -> Request: Merchant id= " + po.getMerchantid());
+		
 		String res = bankService.findbank(po);
+		
+		
 		
 		return res;
 	}
