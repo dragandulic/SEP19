@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import org.apache.log4j.Logger;
+
 
 import com.example.MSbitcoin.dto.CreateOrderResponse;
 import com.example.MSbitcoin.dto.DataLoaderComponent;
@@ -30,6 +32,9 @@ import com.example.MSbitcoin.response.PaymentBitcoinResponse;
 @RequestMapping("/payment")
 public class PaymentController {
 
+	private Logger logger = Logger.getLogger(PaymentController.class);
+	
+	
 	@Autowired
 	private RestTemplate restTemplate; 
 	
@@ -41,6 +46,8 @@ public class PaymentController {
 	
 	@PostMapping(value="/bitcoin")
 	public String payment(@RequestBody PaymentObjDTO po){
+		
+		
 		
 		Map<String, Object> mapa = new HashMap<>();
 		mapa.put("order_id", UUID.randomUUID().toString());
@@ -59,9 +66,12 @@ public class PaymentController {
 		
 		CreateOrderResponse response = restTemplate.postForObject("https://api-sandbox.coingate.com/v2/orders", entity, CreateOrderResponse.class);
 		response.setBitcointoken(po.getBitcointoken());
+		if(response !=null) {
+			logger.info("Method: payment -> Successfuly create order, id=" + response.getId());
+		}
 		
 		CreateOrderResponse c=  createOrderResponseRepository.save(response);
-
+		
 		String res = response.getPayment_url() + "," + c.getIdour();
 		
 		return res;
@@ -86,7 +96,7 @@ public class PaymentController {
 		ResponseEntity<GetOrder> response = restTemplate.exchange("https://api-sandbox.coingate.com/v2/orders/" + cor.getId(),
 				HttpMethod.GET, entity, GetOrder.class);
 		
-		
+		logger.info("Method: getOredr -> Order id=" + response.getBody().getOrder_id());
 		
 		if(response.getBody()!=null) {
 			
@@ -104,7 +114,7 @@ public class PaymentController {
 			HttpEntity<Map<String, Object>> e = new HttpEntity<Map<String, Object>>(mapa, h);
 			
 			UrlResponse re = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8051/objectpayment/successpayment/" + code, e, UrlResponse.class);
-			
+			logger.info("Method: getOredr -> Successfuly save transaction");
 			return "uspesno";
 		}
 		

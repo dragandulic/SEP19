@@ -1,11 +1,13 @@
 package com.example.MSbank.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.MSbank.controller.BankController;
 import com.example.MSbank.dto.DataLoaderComponent;
 import com.example.MSbank.dto.PaymentObjDTO;
 import com.example.MSbank.model.Bank;
@@ -15,6 +17,8 @@ import com.example.MSbank.repository.BankRepository;
 @Service
 public class BankService {
 
+	private Logger logger = Logger.getLogger(BankService.class);
+	
 	@Autowired
 	private BankRepository bankRepository;
 	
@@ -44,7 +48,7 @@ public class BankService {
 		
 		if(!numberOfBank.equals("")) {
 			Bank b = bankRepository.findByBanknumberEquals(numberOfBank);
-			
+			logger.info("Method: findbank -> The merchants bank '"+ b.getName()+"' was found successfully");
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(request, header);
 			
@@ -55,6 +59,9 @@ public class BankService {
 			
 			return res;
 			
+		}
+		else {
+			logger.error("Method: findbank -> The merchants bank  was not found");
 		}
 
 		return null;
