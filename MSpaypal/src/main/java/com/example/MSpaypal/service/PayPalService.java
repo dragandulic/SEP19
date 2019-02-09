@@ -36,7 +36,7 @@ public class PayPalService {
 	    amount.setTotal(price);
 	    Transaction transaction = new Transaction();
 	    transaction.setAmount(amount);
-	    transaction.setDescription("Membership for 30 days payment");
+	    transaction.setDescription(dto.getDescription());
 	    List<Transaction> transactions = new ArrayList<Transaction>();
 	    transactions.add(transaction);
 

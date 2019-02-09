@@ -8,6 +8,7 @@ public class PayPalDTO {
 	private String clientId;
 	private String clientSecret;
 	private String successUrl;
+	private String description;
 	
 	
 	
@@ -88,6 +89,24 @@ public class PayPalDTO {
 
 	public void setSuccessUrl(String successUrl) {
 		this.successUrl = successUrl;
+	}
+
+
+
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	
