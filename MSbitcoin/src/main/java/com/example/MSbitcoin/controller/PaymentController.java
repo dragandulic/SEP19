@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -34,6 +35,8 @@ public class PaymentController {
 
 	private Logger logger = Logger.getLogger(PaymentController.class);
 	
+	@Value("${eureka.instance.instance-id}")
+	private String instanceId;
 	
 	@Autowired
 	private RestTemplate restTemplate; 
@@ -47,6 +50,7 @@ public class PaymentController {
 	@PostMapping(value="/bitcoin")
 	public String payment(@RequestBody PaymentObjDTO po){
 		
+		System.out.println("Hi there! instance id: " + instanceId);
 		
 		
 		Map<String, Object> mapa = new HashMap<>();
@@ -82,7 +86,7 @@ public class PaymentController {
 	@GetMapping(value="/getorder/{id}/{code}")
 	public String getOrder(@PathVariable Long id, @PathVariable String code) {
 		
-		
+		System.out.println("DOSAO U MS");
 		CreateOrderResponse cor = createOrderResponseRepository.findByIdourEquals(id);		
 	
 		HttpHeaders header = new HttpHeaders();
@@ -112,8 +116,9 @@ public class PaymentController {
 			HttpHeaders h = new HttpHeaders();
 			
 			HttpEntity<Map<String, Object>> e = new HttpEntity<Map<String, Object>>(mapa, h);
-			
+			System.out.println("SUCCESSP1");
 			UrlResponse re = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8051/objectpayment/successpayment/" + code, e, UrlResponse.class);
+			System.out.println("SUCCESSP2");
 			logger.info("Method: getOredr -> Successfuly save transaction");
 			return "uspesno";
 		}

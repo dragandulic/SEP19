@@ -1,6 +1,9 @@
 package com.example.KPzuulproxy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -9,20 +12,40 @@ import org.springframework.web.client.RestTemplate;
 import com.example.KPzuulproxy.controller.TransactionDTO;
 import com.example.KPzuulproxy.controller.UrlResponse;
 import com.example.KPzuulproxy.dto.DataLoaderComponent;
+import com.example.KPzuulproxy.dto.RestemplateLoadBalanced;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 
 @Service
 public class ObjectPaymentService {
 
+	
+	
+	@Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    @LoadBalanced
+    private RestTemplate loadBalanced;
+
+    /*
+    public String doOtherStuff() {
+        return loadBalanced.getForObject("http://stores/stores", String.class);
+    }
+
+    public String doStuff() {
+        return restTemplate.getForObject("http://example.com", String.class);
+    }
+	*/
+	
+	
 	@Autowired
 	private ObjectPaymentRepository objectPaymentRepository;
 	
 	@Autowired
 	private DataLoaderComponent dataLoaderComponent;
 	
-	@Autowired
-	private RestTemplate restTemplate;
+
 	
 	public String savePaymentObject(ObjectPayment ob) {
 		
@@ -48,8 +71,9 @@ public class ObjectPaymentService {
 			HttpEntity entity = new HttpEntity(objRes, header);
 			
 			
-			String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8060/payment/bitcoin", entity, String.class);
 			
+			//String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8060/payment/bitcoin", entity, String.class);
+			String response = loadBalanced.postForObject("http://ms-bitcoin/payment/bitcoin", entity, String.class);
 			return response;
 		}
 		return null;
