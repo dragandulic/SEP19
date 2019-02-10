@@ -10,16 +10,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.KPzuulproxy.dto.DataLoaderComponent;
+import com.example.KPzuulproxy.dto.PayPalResponse;
+import com.example.KPzuulproxy.dto.PaypalConfirmDTO;
 import com.example.KPzuulproxy.dto.RestemplateLoadBalanced;
 import com.example.KPzuulproxy.model.ObjectPayment;
 import com.example.KPzuulproxy.repository.ObjectPaymentRepository;
 import com.example.KPzuulproxy.service.ObjectPaymentService;
+
+
+
 
 
 @RestController
@@ -143,6 +149,17 @@ public class ObjectPaymentController {
 		System.out.println("P2");
 		return response;
 	}
+	
+	
+	@PutMapping(value = "/complete/payment")
+    public PayPalResponse completePayment(@RequestBody PaypalConfirmDTO request){
+       
+		
+		PayPalResponse re = loadBalanced.postForObject("http://ms-paypal/paypal/complete/payment/", request, PayPalResponse.class);
+
+		
+		return re;
+    }
 	
 	
 	

@@ -88,7 +88,7 @@ public class ObjectPaymentService {
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(objRes, header);
 					
-			String response = restTemplate.postForObject("http://localhost:8061/paypal/make/payment", entity, String.class);
+			String response = restTemplate.postForObject("http://ms-paypal/paypal/make/payment", entity, String.class);
 			
 			return response;
 		}

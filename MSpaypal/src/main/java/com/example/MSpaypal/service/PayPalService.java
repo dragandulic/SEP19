@@ -7,12 +7,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.MSpaypal.controller.PayPalDTO;
 import com.example.MSpaypal.controller.PayPalResponse;
 import com.example.MSpaypal.controller.PaymentMFDTO;
 import com.example.MSpaypal.controller.PaypalConfirmDTO;
+import com.example.MSpaypal.model.DataLoaderComponent;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payer;
@@ -26,7 +28,8 @@ import com.paypal.base.rest.PayPalRESTException;
 @Service
 public class PayPalService {
 	
-	
+	@Autowired
+	private DataLoaderComponent dataLoaderComponent;
 	
 	public Map<String, Object> createPayment(PayPalDTO dto){
 	    Map<String, Object> response = new HashMap<String, Object>();
@@ -50,7 +53,9 @@ public class PayPalService {
 
 	    RedirectUrls redirectUrls = new RedirectUrls();
 	    redirectUrls.setCancelUrl(dto.getSuccessUrl());
-	    redirectUrls.setReturnUrl("http://localhost:3000/paypal/success");
+	    
+	    
+	    redirectUrls.setReturnUrl("http://" + dataLoaderComponent.getIp() +  ":3000/paypal/success");
 	    
 	    payment.setRedirectUrls(redirectUrls);
 	    Payment createdPayment;
