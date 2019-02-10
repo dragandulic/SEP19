@@ -105,7 +105,8 @@ public class ObjectPaymentService {
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(objRes, header);
 					
-			String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8062/payment/bank", entity, String.class);
+			//String response = restTemplate.postForObject("http://" + dataLoaderComponent.getIp() + ":8062/payment/bank", entity, String.class);
+			String response = loadBalanced.postForObject("http://ms-bank/payment/bank", entity, String.class);
 			
 			return response;
 		}
