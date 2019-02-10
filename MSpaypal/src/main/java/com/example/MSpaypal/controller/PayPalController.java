@@ -47,7 +47,7 @@ public class PayPalController {
 	
 	
 	    @JsonValue
-	    @PutMapping(value = "/complete/payment")
+	    @PostMapping(value = "/complete/payment")
 	    public PayPalResponse completePayment(@RequestBody PaypalConfirmDTO request){
 	        return payPalService.completePayment(request);
 	    }

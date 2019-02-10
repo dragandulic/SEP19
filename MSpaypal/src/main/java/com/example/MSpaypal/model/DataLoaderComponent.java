@@ -3,6 +3,9 @@ package com.example.MSpaypal.model;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DataLoaderComponent {
 
 	

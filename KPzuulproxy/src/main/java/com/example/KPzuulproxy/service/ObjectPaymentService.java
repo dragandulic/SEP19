@@ -88,7 +88,7 @@ public class ObjectPaymentService {
 			HttpHeaders header = new HttpHeaders();	
 			HttpEntity entity = new HttpEntity(objRes, header);
 					
-			String response = restTemplate.postForObject("http://ms-paypal/paypal/make/payment", entity, String.class);
+			String response = loadBalanced.postForObject("http://ms-paypal/paypal/make/payment", entity, String.class);
 			
 			return response;
 		}
@@ -159,7 +159,7 @@ public class ObjectPaymentService {
 				o.setType(t.getType());
 				o.setCurrency(t.getCurrency());
 				o.setMerchantmail(t.getMerchant());
-				o.setPayermail(t.getPayeremail());
+				//o.setPayermail(t.getPayeremail());
 				o.setAmount(Double.parseDouble(t.getAmount())); //ja izvucem amount kao string
 				o.setDatetime(t.getTime());
 				o.setType(t.getType());
